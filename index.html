@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<script>
+
+importObject = {
+  imports: {
+    imported_func: function(arg) {
+      console.log(arg);
+    }
+  },
+
+	env: { 
+    __memory_base: 0,
+    __table_base: 0,
+		__stack_pointer: new WebAssembly.Global({value:"i32", mutable:true} ,0),
+    __linear_memory: new WebAssembly.Memory({initial: 1}),
+	}
+
+};
+
+request = new XMLHttpRequest();
+request.open("GET", "inc.wasm");
+request.responseType = "arraybuffer";
+request.send();
+
+request.onload = function() {
+  var bytes = request.response;
+  WebAssembly.instantiate(bytes, importObject).then(results => {
+    console.log( results.instance.exports.inc(11) );
+  });
+};
+
+		</script>
+
+	</head>
+	<body>
+		hello
+	</body>
+</html>
