@@ -27,6 +27,11 @@ request.onload = function() {
   var bytes = request.response;
   WebAssembly.instantiate(bytes, importObject).then(results => {
     console.log( results.instance.exports.inc(11) );
+		try {
+			console.log( "fail, should not call private:", results.instance.exports.dec(11) );
+		} catch (e) {
+			console.log("pass, calling private occurs exception")
+		}
   });
 };
 
