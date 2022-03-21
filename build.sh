@@ -11,4 +11,6 @@ clang \
 	-o inc.wasm \
 	inc.c
 
-wasm-objdump -x inc.wasm
+rm -rf inc.wasm.tmp*
+hexdump inc.wasm | head -n 1
+#wasm-objdump -x inc.wasm

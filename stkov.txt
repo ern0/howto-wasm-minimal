@@ -1,0 +1,8 @@
+
+WASM module runs on Mac/Chromium, but not on Linux/Chromium
+
+
+I've created a pretty simple WASM module, compiled on MacOS, tried in 
+
+--
+

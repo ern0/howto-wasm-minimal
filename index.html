@@ -19,13 +19,16 @@ importObject = {
 };
 
 request = new XMLHttpRequest();
-request.open("GET", "inc.wasm");
+request.open("GET", "mac-inc.wasm");
 request.responseType = "arraybuffer";
 request.send();
 
+console.log(request)
+
 request.onload = function() {
-  var bytes = request.response;
+  bytes = request.response;
   WebAssembly.instantiate(bytes, importObject).then(results => {
+		console.log( results.instance.exports )
     console.log( results.instance.exports.inc(11) );
 		try {
 			console.log( "fail, should not call private:", results.instance.exports.dec(11) );
