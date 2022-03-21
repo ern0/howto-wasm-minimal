@@ -4,5 +4,22 @@ WASM module runs on Mac/Chromium, but not on Linux/Chromium
 
 I've created a pretty simple WASM module, compiled on MacOS, tried in 
 
+MacOS:
+
+$ clang --version
+Homebrew clang version 13.0.1
+Target: x86_64-apple-darwin21.3.0
+Thread model: posix
+InstalledDir: /usr/local/opt/llvm/bin
+
+browser:
+Version 99.0.4844.74 (Official Build) (x86_64)
+Version 99.0.4844.83 (Official Build) (x86_64)
+
+console:
+12
+pass, calling private occurs exception
+
+
 --
 
