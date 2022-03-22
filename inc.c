@@ -9,3 +9,10 @@ PRIVATE uint32_t dec(uint32_t x) {
 PUBLIC uint32_t inc(uint32_t x) {
 	return dec(x) + 2;
 }
+
+
+extern void wasmcallback();
+
+PUBLIC void test(char* message) {
+	wasmcallback();
+}

@@ -8,13 +8,14 @@ function wasmInit() {
 		},
 
 		env: { 
+			wasmcallback: wasmcallback,
 			__memory_base: 0,
 			__table_base: 0,
 			__stack_pointer: new WebAssembly.Global({value:"i32", mutable:true} ,0),
 			__linear_memory: new WebAssembly.Memory({initial: 1}),
 		}
 
-	};
+	}; // importObject
 
 	request = new XMLHttpRequest();
 	request.open("GET", "inc.wasm");
@@ -25,14 +26,15 @@ function wasmInit() {
 		bytes = request.response;
 		WebAssembly.instantiate(bytes, importObject).then( 
 			function(results) {
-
 				wasm = results.instance.exports;
 
 				wasmTest();
-			}
-		);
-	};
-}
+
+			} // function
+		); // then
+	}; // request.onload()
+
+} // initWasm()
 
 function wasmTest() {
 
@@ -44,6 +46,10 @@ function wasmTest() {
 			console.log("pass, calling private occurs exception")
 		}
 
-		wasm.alert("lof");
+		wasm.test();
 
+}
+
+function wasmcallback() {
+	console.log("CALLED BACK");
 }

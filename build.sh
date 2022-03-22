@@ -8,6 +8,7 @@ clang \
 	-Wl,--no-entry \
 	-Wl,--export-all \
 	-Wl,--lto-O3 \
+	-Wl,--allow-undefined-file=inc.ext \
 	-o inc.wasm \
 	inc.c
 
