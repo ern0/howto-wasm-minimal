@@ -8,7 +8,7 @@ function wasmInit() {
 		},
 
 		env: { 
-			wasmcallback: wasmcallback,
+			console_log: console_log,
 			__memory_base: 0,
 			__table_base: 0,
 			__stack_pointer: new WebAssembly.Global({value:"i32", mutable:true} ,0),
@@ -36,6 +36,7 @@ function wasmInit() {
 
 } // initWasm()
 
+
 function wasmTest() {
 
 		console.log( wasm.inc(99) );
@@ -46,10 +47,10 @@ function wasmTest() {
 			console.log("pass, calling private occurs exception")
 		}
 
-		wasm.test();
+		wasm.test(33);
 
 }
 
-function wasmcallback() {
-	console.log("CALLED BACK");
+function console_log(value) {
+	console.log("log: ", value);
 }
