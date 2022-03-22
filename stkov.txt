@@ -23,3 +23,12 @@ pass, calling private occurs exception
 
 --
 
+
+
+
+--
+ WebAssembly.instantiateStreaming(fetch('program.wasm'))
+               .then(prog => {
+                   console.log(prog.instance.exports.add(1, 2)); 
+               });
+    </script>
