@@ -1,18 +1,16 @@
+function console_log(value) {
+	console.log("log: ", value);
+}
+
 function wasmInit() {
 
 	importObject = {
-		imports: {
-			imported_func: function(arg) {
-				console.log(arg);
-			}
-		},
+
+		imports: { },
 
 		env: { 
-			console_log: console_log,
-			__memory_base: 0,
-			__table_base: 0,
-			__stack_pointer: new WebAssembly.Global({value:"i32", mutable:true} ,0),
-			__linear_memory: new WebAssembly.Memory({initial: 1}),
+			console_log: function(arg) { console.log(arg); },
+			memory: new WebAssembly.Memory({initial: 10})
 		}
 
 	}; // importObject
@@ -34,7 +32,7 @@ function wasmInit() {
 		); // then
 	}; // request.onload()
 
-} // initWasm()
+} // wasmInit()
 
 
 function wasmTest() {
@@ -47,10 +45,9 @@ function wasmTest() {
 			console.log("pass, calling private occurs exception")
 		}
 
-		wasm.test(33);
+		wasm.print(33);
 
 }
 
-function console_log(value) {
-	console.log("log: ", value);
-}
+
+document.addEventListener("DOMContentLoaded", wasmInit, false);

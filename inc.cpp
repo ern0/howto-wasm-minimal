@@ -14,6 +14,6 @@ public uint32_t inc(uint32_t x) {
 }
 
 
-public void test(uint32_t value) {
+public void print(uint32_t value) {
 	console_log(value);
 }
