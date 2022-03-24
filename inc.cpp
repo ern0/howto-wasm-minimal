@@ -1,6 +1,6 @@
 #include "wasm-tricks.hpp"
 
-
+uint8_t data[222];
 import void console_log(uint32_t value);
 
 
@@ -18,11 +18,8 @@ public void print(uint32_t value) {
 	console_log(value);
 }
 
-public void print_mem() {
-	char* mem = (char*)0;
+public void set_memory(uint8_t a, uint8_t b) {
 
-	console_log(mem[0]);
-	console_log(mem[1]);
-	mem[0]++;
-	mem[1]++;
+	data[0] = a;
+	data[1] = b;
 }
