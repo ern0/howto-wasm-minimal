@@ -4,13 +4,18 @@ function console_log(value) {
 
 function wasmInit() {
 
-	importObject = {
+	mem = new WebAssembly.Memory({initial: 10});
 
-		imports: { },
+	importObject = {
 
 		env: { 
 			console_log: function(arg) { console.log(arg); },
-			memory: new WebAssembly.Memory({initial: 10})
+
+		'memoryBase': 0,
+		'tableBase': 0,
+		'memory': new WebAssembly.Memory({initial: 256}),
+		'table': new WebAssembly.Table({initial: 0, element: 'anyfunc'})
+
 		}
 
 	}; // importObject
@@ -46,7 +51,11 @@ function wasmTest() {
 		}
 
 		wasm.print(33);
+		mem[0] = 11;
+		mem[1] = 22;
+		wasm.print_mem();
 
+		console.log(mem[0], mem[1]);
 }
 
 

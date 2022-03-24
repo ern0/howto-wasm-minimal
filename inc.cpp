@@ -17,3 +17,12 @@ public uint32_t inc(uint32_t x) {
 public void print(uint32_t value) {
 	console_log(value);
 }
+
+public void print_mem() {
+	char* mem = (char*)0;
+
+	console_log(mem[0]);
+	console_log(mem[1]);
+	mem[0]++;
+	mem[1]++;
+}
