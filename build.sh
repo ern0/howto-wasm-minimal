@@ -3,11 +3,8 @@ set -e
 
 cat \
 	inc.cpp  \
-	| grep "^import "  \
-	| sed "s/unsigned //g"  \
-	| cut -d"(" -f1  \
-	| cut -d";" -f1 \
-	| cut -d" " -f3  \
+	| grep "^\/\/\/ allow-undefined\:" \
+	| cut -d" " -f3 \
 	> /tmp/import.lst
 
 clang++ \
@@ -21,7 +18,7 @@ clang++ \
 	-o inc.wasm \
 	inc.cpp
 
-rm -f /tmp/import.lst
+#rm -f /tmp/import.lst
 rm -f inc.wasm.tmp*
 hexdump inc.wasm | head -n 1
-wasm-objdump -x inc.wasm
+#wasm-objdump -x inc.wasm

@@ -25,11 +25,11 @@ document.addEventListener("DOMContentLoaded", function() {
 		wasmInstance = new WebAssembly.Instance(wasmModule, imports);
 
     console.log( wasmInstance.exports.inc(99) );
+
 		heap[0] = 99;
 		heap[1] = 99;
 		heap[2] = 99;
-
-		wasmInstance.exports.incmem(0);
+		wasmInstance.exports.incmem();
 		console.log( heap[0], heap[1], heap[2] );
 	
 	} // XMLHttpRequest.onload()

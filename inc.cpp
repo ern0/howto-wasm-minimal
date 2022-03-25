@@ -1,26 +1,23 @@
-#include "wasm-tricks.hpp"
+#include <stdint.h>
 
-import void console_log(uint32_t value);
+/// allow-undefined: console_log
+extern "C" void console_log(uint32_t value);
 
-
-private uint32_t dec(uint32_t x) {
-	return x - 1;
-}
-
-
-public uint32_t inc(uint32_t x) {
-	return dec(x) + 2;
-}
-
-
-public void print(uint32_t value) {
+void print(uint32_t value) {
 	console_log(value);
 }
 
+static uint32_t dec(uint32_t x) {
+	return x - 1;
+}
 
-public void incmem(uint8_t* memory) {
+extern "C" uint32_t inc(uint32_t x) {
+	return dec(x) + 2;
+}
 
+/// allow-undefined: memory
+extern uint8_t* memory;
+
+extern "C" void incmem() {
 	memory[0]++;
-	memory[1]++;
-
 }
