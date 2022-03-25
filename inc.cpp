@@ -1,6 +1,5 @@
 #include "wasm-tricks.hpp"
 
-uint8_t data[222];
 import void console_log(uint32_t value);
 
 
@@ -18,8 +17,9 @@ public void print(uint32_t value) {
 	console_log(value);
 }
 
-public void set_memory(uint8_t a, uint8_t b) {
 
-	data[0] = a;
-	data[1] = b;
+uint8_t buffer = 11;
+public void setmem(uint8_t value) {
+
+	//buffer[0] = value;
 }
