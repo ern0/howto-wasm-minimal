@@ -15,11 +15,14 @@ extern "C" uint32_t inc(uint32_t x) {
 	return dec(x) + 2;
 }
 
-// wasm: (memory (import "js" "mem") 1)
-
 /// allow-undefined: memory
-extern uint8_t* memory;
+extern uint8_t memory;
 
 extern "C" void incmem() {
-	memory[0]++;
+	
+	uint8_t* ptr = &memory;
+
+	ptr[0] += 1;
+	ptr[1] += 10;
+	ptr[2] += 100;
 }

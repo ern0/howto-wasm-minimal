@@ -5,10 +5,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	imports = {
 		env: {
-			console_log: function(arg) { console.log(arg); }
-		},
-		js: {
-			mem: memory
+			console_log: function(arg) { console.log(arg); },
+			memory: memory,
 		}
 	};
 
@@ -24,10 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		wasmInstance = new WebAssembly.Instance(wasmModule, imports);
 
     console.log( wasmInstance.exports.inc(99) );
-
-		heap[0] = 99;
-		heap[1] = 99;
-		heap[2] = 99;
+		heap[0] = 99; heap[1] = 99; heap[2] = 99;
 		wasmInstance.exports.incmem();
 		console.log( heap[0], heap[1], heap[2] );
 	
