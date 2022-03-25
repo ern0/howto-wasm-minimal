@@ -24,4 +24,4 @@ clang++ \
 rm -f /tmp/import.lst
 rm -f inc.wasm.tmp*
 hexdump inc.wasm | head -n 1
-#wasm-objdump -x inc.wasm
+wasm-objdump -x inc.wasm

@@ -1,34 +1,37 @@
-function console_log(value) {
-	console.log("log: ", value);
-}
+document.addEventListener("DOMContentLoaded", function() {
 
-function wasmInit() {
+	memory = new WebAssembly.Memory({
+		initial: 1,
+		maximum: 10
+	});
+	heap = new Uint8Array(memory.buffer);
 
-	//memory = new WebAssembly.Memory({initial:10, maximum:100});
-
-	WebAssembly.instantiateStreaming(fetch('inc.wasm'), { 
-		
-		//js: { mem: memory } ,
-		
-		env: { 
+	imports = {
+		env: {
+			memory: memory,
 			console_log: function(arg) { console.log(arg); }
 		}
+	};
 
-	}).then(obj => {
+	request = new XMLHttpRequest();
+	request.open("GET", "inc.wasm");
+	request.responseType = "arraybuffer";
+	request.send();
 
-		wasm = obj.instance.exports;
-		wasmTest();
+	request.onload = function() {
 
-	});
-}
+  	wasmSource = request.response;
+		wasmModule = new WebAssembly.Module(wasmSource);
+		wasmInstance = new WebAssembly.Instance(wasmModule, imports);
 
+    console.log( wasmInstance.exports.inc(99) );
+		heap[0] = 99;
+		heap[1] = 99;
+		heap[2] = 99;
 
-function wasmTest() {
+		wasmInstance.exports.incmem(0);
+		console.log( heap[0], heap[1], heap[2] );
+	
+	} // XMLHttpRequest.onload()
 
-		console.log( wasm.inc(99) );
-		wasm.print(33);
-		
-}
-
-
-document.addEventListener("DOMContentLoaded", wasmInit, false);
+}, false); // document.DOMContentLoaded()

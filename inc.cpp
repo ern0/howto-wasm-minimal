@@ -18,8 +18,9 @@ public void print(uint32_t value) {
 }
 
 
-uint8_t buffer = 11;
-public void setmem(uint8_t value) {
+public void incmem(uint8_t* memory) {
 
-	//buffer[0] = value;
+	memory[0]++;
+	memory[1]++;
+
 }
