@@ -15,6 +15,8 @@ extern "C" uint32_t inc(uint32_t x) {
 	return dec(x) + 2;
 }
 
+// wasm: (memory (import "js" "mem") 1)
+
 /// allow-undefined: memory
 extern uint8_t* memory;
 

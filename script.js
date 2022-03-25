@@ -1,15 +1,14 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-	memory = new WebAssembly.Memory({
-		initial: 1,
-		maximum: 10
-	});
+	memory = new WebAssembly.Memory({ initial: 10, maximum: 100 });
 	heap = new Uint8Array(memory.buffer);
 
 	imports = {
 		env: {
-			memory: memory,
 			console_log: function(arg) { console.log(arg); }
+		},
+		js: {
+			mem: memory
 		}
 	};
 
@@ -20,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	request.onload = function() {
 
-  	wasmSource = request.response;
+		wasmSource = request.response;
 		wasmModule = new WebAssembly.Module(wasmSource);
 		wasmInstance = new WebAssembly.Instance(wasmModule, imports);
 
