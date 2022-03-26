@@ -3,7 +3,7 @@
 extern "C" void console_log(uint32_t value);
 extern uint8_t memory;
 
-void print(uint32_t value) {
+static void print(uint32_t value) {
 	console_log(value);
 }
 
