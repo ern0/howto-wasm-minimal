@@ -1,31 +1,102 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", main, false);
 
-	memory = new WebAssembly.Memory({ initial: 10, maximum: 100 });
+
+function wasmLoad(fileName) {
+
+	var memory = new WebAssembly.Memory({ initial: 100, maximum: 1000 });
 	heap = new Uint8Array(memory.buffer);
 
-	imports = {
+	var imports = {
 		env: {
 			console_log: function(arg) { console.log(arg); },
 			memory: memory,
 		}
 	};
 
-	request = new XMLHttpRequest();
-	request.open("GET", "inc.wasm");
+	var request = new XMLHttpRequest();
+	request.open("GET", fileName);
 	request.responseType = "arraybuffer";
 	request.send();
 
 	request.onload = function() {
 
-		wasmSource = request.response;
-		wasmModule = new WebAssembly.Module(wasmSource);
-		wasmInstance = new WebAssembly.Instance(wasmModule, imports);
+		var wasmSource = request.response;
+		var wasmModule = new WebAssembly.Module(wasmSource);
+		var wasmInstance = new WebAssembly.Instance(wasmModule, imports);
+		wasm = wasmInstance.exports;
 
-    console.log( wasmInstance.exports.inc(99) );
-		heap[0] = 99; heap[1] = 99; heap[2] = 99;
-		wasmInstance.exports.incmem();
-		console.log( heap[0], heap[1], heap[2] );
+		wasmLoadDone();
 	
 	} // XMLHttpRequest.onload()
+} // loadWasm()
 
-}, false); // document.DOMContentLoaded()
+
+function wasmSimpleTest() {
+
+	console.log( wasm.inc(99) );
+
+	heap[0] = 99; heap[1] = 99; heap[2] = 99;
+	wasm.incmem();
+	console.log( heap[0], heap[1], heap[2] );
+
+} // wasmSimpleTest()
+
+
+function imageLoad() {
+
+	img = new Image();
+	img.crossOrigin = 'anonymous';
+	img.src = "volt.jpg";
+	canvas = document.getElementById("canvas");
+	ctx = canvas.getContext("2d");
+	img.onload = function() {
+		ctx.drawImage(img, 0, 0);
+		img.style.display = "none";
+		imageLoadDone();
+	};
+
+} // imageLoad()
+
+
+function resizeCanvas() {
+	
+	var title = document.getElementById("title");
+	title.innerHTML = img.width + " x " + img.height;
+	
+	ctx.width = img.width;
+	ctx.width = img.height * 2;
+}
+
+
+function imageProc() {
+
+	imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+	count = canvas.width * canvas.height * 4;
+
+	for (var i = 0; i < count; i++) {
+		heap[i] = imageData.data[i];
+	}
+	
+	wasm.gray(canvas.width, canvas.height);
+
+	for (var i = 0; i < count; i++) {
+		imageData.data[i] = heap[i];
+	}
+	ctx.putImageData(imageData, 0, img.height);
+
+}
+//===============================================================
+function main() { 
+	wasmLoad("inc.wasm"); 
+}
+function wasmLoadDone() {
+	wasmSimpleTest();
+	imageLoad();
+}
+function imageLoadDone() {
+	resizeCanvas();
+	imageProc();
+}
+
+function imageProcDone() {
+}
