@@ -25,9 +25,7 @@ extern "C" void incmem() {
 }
 
 extern "C" void gray(int width, int height) {
-
 	uint8_t* ptr = &memory;
-
 	for (int i = 0; i < width * height * 4; i += 4) {
 
 		uint32_t sum = ptr[i] + ptr[i+1] + ptr[i+2];
@@ -35,6 +33,17 @@ extern "C" void gray(int width, int height) {
 		ptr[i] = avg;
 		ptr[i+1] = avg;
 		ptr[i+2] = avg;
+
+	}
+}
+
+extern "C" void swaprg(int width, int height) {
+	uint8_t* ptr = &memory;
+	for (int i = 0; i < width * height * 4; i += 4) {
+
+		uint32_t r = ptr[i];
+		ptr[i] = ptr[i+1];
+		ptr[i+1] = r;
 
 	}
 }

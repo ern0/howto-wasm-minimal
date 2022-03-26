@@ -58,13 +58,15 @@ function imageLoad() {
 } // imageLoad()
 
 
-function resizeCanvas() {
+function prepareCanvas() {
 	
 	var title = document.getElementById("title");
 	title.innerHTML = img.width + " x " + img.height;
 	
 	ctx.width = img.width;
 	ctx.width = img.height * 2;
+
+	imageProcMode = 0;
 }
 
 
@@ -77,7 +79,17 @@ function imageProc() {
 		heap[i] = imageData.data[i];
 	}
 	
-	wasm.gray(canvas.width, canvas.height);
+	switch (imageProcMode) {
+		case 0:
+			wasm.gray(canvas.width, canvas.height);
+			break;
+		case 1: 
+			wasm.swaprg(canvas.width, canvas.height);
+			break;
+		default:
+			imageProcMode = -1;
+	}
+	imageProcMode++;
 
 	for (var i = 0; i < count; i++) {
 		imageData.data[i] = heap[i];
@@ -85,6 +97,7 @@ function imageProc() {
 	ctx.putImageData(imageData, 0, img.height);
 
 }
+
 //===============================================================
 function main() { 
 	wasmLoad("inc.wasm"); 
@@ -94,9 +107,10 @@ function wasmLoadDone() {
 	imageLoad();
 }
 function imageLoadDone() {
-	resizeCanvas();
-	imageProc();
+	prepareCanvas();
+	carousel();
 }
-
-function imageProcDone() {
+function carousel() {
+	imageProc();
+	setTimeout(carousel,1000);
 }
