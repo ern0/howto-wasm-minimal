@@ -70,7 +70,7 @@ function prepareCanvas() {
 }
 
 
-function imageProc() {
+function copyTopImageToHeap() {
 
 	imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 	count = canvas.width * canvas.height * 4;
@@ -78,23 +78,26 @@ function imageProc() {
 	for (var i = 0; i < count; i++) {
 		heap[i] = imageData.data[i];
 	}
-	
-	switch (imageProcMode) {
-		case 0:
-			wasm.gray(canvas.width, canvas.height);
-			break;
-		case 1: 
-			wasm.swaprg(canvas.width, canvas.height);
-			break;
-		default:
-			imageProcMode = -1;
-	}
-	imageProcMode++;
+
+}
+
+function copyHeapToBottomImage() {
 
 	for (var i = 0; i < count; i++) {
 		imageData.data[i] = heap[i];
 	}
 	ctx.putImageData(imageData, 0, img.height);
+
+}
+
+function imageProc() {
+
+	copyTopImageToHeap();
+	
+	wasm.swap_red(canvas.width, canvas.height, imageProcMode);
+	imageProcMode++;
+
+	copyHeapToBottomImage();
 
 }
 
@@ -110,7 +113,26 @@ function imageLoadDone() {
 	prepareCanvas();
 	carousel();
 }
-function carousel() {
+
+function carousel() {	
+
 	imageProc();
-	setTimeout(carousel,1000);
+
+	blurCount = 0;
+	setTimeout(blur, 1000);
+}
+
+function blur() {
+
+	wasm.blur(canvas.width, canvas.height);
+	copyHeapToBottomImage();
+
+	blurCount++;
+
+	if (blurCount > 60) {
+		setTimeout(carousel, 100);
+	} else {
+		setTimeout(blur, 10);
+	}
+
 }

@@ -1,11 +1,17 @@
 # howto-wasm-minimal
 
-How to create minimal wasm module
+How to create minimal wasm module - PoC
 
-## Concept
+## Goals
 
-Gray+Blur shirding: image -> raw -> sharding -> raw -> glue -> profit
+- use no Emscripten or other libs
+- simple toolchain, compile to wasm in a single step 
+- wasm may use memory prepared in JavaScript
+- do something relative compute-intensive
+- do something visible
 
-## TODO:
-- pass array js2wasm
-- pass array wasm2js
+# Final word
+
+Writing web app in any language
+which is not JavaScript is just 
+pure joy

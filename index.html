@@ -3,6 +3,10 @@
 		<script src="script.js"/></script>
 		<style>
 
+body {
+	position: absolute;
+	top: -358;
+}
 #title {
 	font-family: monospace; 
 	padding: 4px; 
@@ -12,10 +16,17 @@
 	color: #eef;
 	opacity: 80%;
 }			
+#url {
+	font-family: monospace;
+	font-size: 18px;
+	text-align: center;
+}
 		</style>
 	</head>
 	<body>
 		<div id="title"> &nbsp; </div>
 		<canvas id="canvas" width="636" height="716"></canvas>
+		<br />
+		<div id="url"> <a href="https://github.com/ern0/howto-wasm-minimal">Source available on GitHub</a></div>
 	</body>
 </html>
