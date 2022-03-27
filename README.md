@@ -15,3 +15,7 @@ How to create minimal wasm module - PoC
 Writing web app in any language
 which is not JavaScript is just 
 pure joy
+
+# Try it
+
+https://linkbroker.hu/stuff/howto-wasm-minimal/
