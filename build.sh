@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
 
-clang++ \
+clang++ -v \
 	--target=wasm32 \
 	-nostdlib \
 	-O3 \
+	-fuse-ld /usr/local/opt/llvm/bin/wasm-ld \
 	-Wl,--no-entry \
 	-Wl,--export-all \
 	-Wl,--lto-O3 \
