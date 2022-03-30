@@ -8,7 +8,7 @@ clang++ \
 	-o /tmp/inc.o \
 	-c \
 	inc.cpp
-	
+
 wasm-ld \
 	--no-entry \
 	--export-all \
@@ -18,5 +18,6 @@ wasm-ld \
 	/tmp/inc.o \
 	-o inc.wasm
 
+rm -rf inc.wasm.tmp*
 hexdump inc.wasm | head -n 1
 #wasm-objdump -x inc.wasm
