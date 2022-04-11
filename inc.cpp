@@ -28,11 +28,10 @@ extern "C" void gray(int width, int height) {
 	uint8_t* ptr = &memory;
 	for (int i = 0; i < width * height * 4; i += 4) {
 
-		uint32_t sum = ptr[i] + ptr[i+1] + ptr[i+2];
-		uint32_t avg = sum / 3;
-		ptr[i] = avg;
-		ptr[i+1] = avg;
-		ptr[i+2] = avg;
+		uint32_t gray = 0.299 * ptr[i] + 0.587 * ptr[i+1] + 0.114 * ptr[i+2];
+		ptr[i] = gray;
+		ptr[i+1] = gray;
+		ptr[i+2] = gray;
 
 	}
 }
