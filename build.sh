@@ -5,9 +5,9 @@ clang++ \
 	--target=wasm32 \
 	-nostdlib \
 	-O3 \
-	-o /tmp/inc.o \
+	-o /tmp/bytebeat.o \
 	-c \
-	inc.cpp
+	bytebeat.cpp
 
 wasm-ld \
 	--no-entry \
@@ -15,9 +15,9 @@ wasm-ld \
 	--lto-O3 \
 	--allow-undefined \
 	--import-memory \
-	/tmp/inc.o \
-	-o inc.wasm
+	/tmp/bytebeat.o \
+	-o bytebeat.wasm
 
-rm -rf inc.wasm.tmp*
-hexdump inc.wasm | head -n 1
+rm -rf bytebeat.wasm.tmp*
+hexdump bytebeat.wasm | head -n 1
 #wasm-objdump -x inc.wasm

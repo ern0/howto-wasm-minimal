@@ -50,4 +50,4 @@ pure joy.
 The color change and the blur effect is a
 WASM module, written in C:
 
-https://linkbroker.hu/stuff/howto-wasm-minimal/
+http://linkbroker.hu/stuff/howto-wasm-minimal/
