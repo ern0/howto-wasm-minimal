@@ -33,6 +33,9 @@ Tested on versions 13 and 14.
 
 Debian nightly pacakges: https://apt.llvm.org/
 
+On MacOS, you should install CLANG from homebrew.
+More info on Mac troubleshooting: https://til.simonwillison.net/webassembly/compile-to-wasm-llvm-macos
+
 On Windows, you may use Chocolatey
 package manager to install CLANG: https://chocolatey.org/
 
